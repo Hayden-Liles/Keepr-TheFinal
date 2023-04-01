@@ -5,12 +5,14 @@ namespace TheFinal.Controllers
     public class VaultsController : ControllerBase
     {
         private readonly VaultsService _vaultsService;
+        private readonly KeepsService _keepsService;
         private readonly Auth0Provider _auth;
 
-        public VaultsController(VaultsService vaultsService, Auth0Provider auth)
+        public VaultsController(VaultsService vaultsService, Auth0Provider auth, KeepsService keepsService)
         {
             _vaultsService = vaultsService;
             _auth = auth;
+            _keepsService = keepsService;
         }
 
         [HttpPost]
@@ -80,15 +82,14 @@ namespace TheFinal.Controllers
             }
         }
 
-        // SECTION VAULT KEEP THINGS
-
-        [HttpGet("{id}/keeps")]
-        public ActionResult<List<Keep>> getKeepsInVault(int id)
+        [HttpGet("{vaultId}/keeps")]
+        public async Task<ActionResult<List<VaultedKeep>>> getKeepsInVault(int vaultId)
         {
             try
             {
-                List<Keep> keeps = _vaultsService.getKeepsInVault(id);
-                return keeps;
+                Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+                List<VaultedKeep> keeps = _vaultsService.getKeepsInVault(vaultId, userInfo);
+                return Ok(keeps);
             }
             catch (Exception e)
             {

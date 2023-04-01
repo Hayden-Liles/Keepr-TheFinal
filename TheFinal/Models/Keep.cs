@@ -12,4 +12,7 @@ namespace TheFinal.Models
 
         public Account Creator { get; set; }
     }
+    public class VaultedKeep : Keep{
+        public int vaultKeepId { get; set; }
+    }
 }

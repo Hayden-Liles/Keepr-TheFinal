@@ -9,15 +9,17 @@ namespace TheFinal.Services
             _repo = repo;
         }
 
+        internal Vault createVault(Vault vaultData)
+        {
+            return _repo.createVault(vaultData);
+        }
+
         internal Vault GetVault(int id, Account userInfo)
         {
             Vault vault = _repo.getVault(id);
-            if(vault.IsPrivate == true){
-                if(userInfo == null) throw new Exception($"You are unauthorized to view this vault");
-                if(vault.CreatorId == userInfo?.Id){
-                    return vault;
-                }
-                throw new Exception($"You are unauthorized to view this vault");
+            if(vault.IsPrivate == true || vault == null){
+                if(userInfo == null || vault == null) throw new Exception($"You are unauthorized to view this vault");
+                if(vault.CreatorId != userInfo?.Id) throw new Exception($"You are unauthorized to view this vault");
             }
             return vault;
         }
@@ -25,6 +27,7 @@ namespace TheFinal.Services
         internal Vault updateVault(Vault vaultData, Account userInfo)
         {
             Vault vaultToCheck = this.GetVault(vaultData.Id, userInfo);
+            if(vaultToCheck.CreatorId != userInfo.Id) throw new Exception("You are unauthorized to edit this vault");
 
             if(vaultData.Name == null){
                 vaultData.Name = vaultToCheck.Name;
@@ -45,14 +48,16 @@ namespace TheFinal.Services
 
         internal string deleteVault(int vaultId, Account userInfo)
         {
-            this.GetVault(vaultId, userInfo);
+            Vault vault = this.GetVault(vaultId, userInfo);
+            if(vault.CreatorId != userInfo.Id) throw new Exception("You are unauthorized to delete this vault");
             _repo.deleteVault(vaultId);
             return $"Vault at Id:{vaultId} has been successfuly deleted!";
         }
 
-        internal List<Keep> getKeepsInVault(int id)
+        internal List<VaultedKeep> getKeepsInVault(int vaultId, Account userInfo)
         {
-            throw new NotImplementedException();
+            this.GetVault(vaultId, userInfo);
+            return _repo.getKeepsInVault(vaultId);
         }
     }
 }

@@ -22,5 +22,24 @@ namespace TheFinal.Repositories
             vaultKeepData.Id = id;
             return vaultKeepData;
         }
+
+        internal VaultKeep getVaultKeepById(int vkId)
+        {
+            string sql = @"
+            SELECT
+            *
+            FROM
+            vaultKeeps WHERE id = @vkId";
+            return _db.QueryFirstOrDefault<VaultKeep>(sql, new {vkId});
+        }
+
+        internal void deleteVaultKeep(int vkId)
+        {
+            string sql = @"
+            DELETE
+            FROM
+            vaultKeeps WHERE id = @vkId";
+            _db.Execute(sql, new {vkId});
+        }
     }
 }

@@ -64,5 +64,24 @@ namespace TheFinal.Repositories
             ";
             int rows = _db.Execute(sql, new { id });
         }
+
+        internal List<VaultedKeep> getKeepsInVault(int id)
+        {
+            string sql = @"
+            SELECT
+            vk.id as vaultKeepId,
+            k.*,
+            acts.*
+            FROM vaultKeeps vk
+            JOIN keeps k ON vk.keepId = k.id
+            JOIN accounts acts ON k.creatorId = acts.id
+            WHERE vaultId = @id;
+            ";
+            List<VaultedKeep> keeps = _db.Query<VaultedKeep, Account, VaultedKeep>(sql, (keep, creator) => {
+                keep.Creator = creator;
+                return keep;
+            }, new { id }).ToList();
+            return keeps;
+        }
     }
 }
