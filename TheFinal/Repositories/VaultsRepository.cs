@@ -83,5 +83,21 @@ namespace TheFinal.Repositories
             }, new { id }).ToList();
             return keeps;
         }
+
+        internal List<Vault> GetVaultsByProfile(string id)
+        {
+            string sql = @"
+            SELECT
+            v.*,
+            a.*
+            FROM vaults v
+            JOIN accounts a ON v.creatorId = a.id
+            WHERE v.creatorId = @id";
+            return _db.Query<Vault, Account, Vault>(sql, (v, a) =>
+            {
+                v.Creator = a;
+                return v;
+            }, new { id }).ToList();
+        }
     }
 }

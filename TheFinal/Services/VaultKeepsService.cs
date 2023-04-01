@@ -24,7 +24,7 @@ namespace TheFinal.Services
             if(vaultKeep.CreatorId != userId){
                 throw new Exception("You are not the creator of this vault keep");
             }
-            _repo.deleteVaultKeep(vkId);
+            _repo.deleteVaultKeep(vaultKeep);
         }
     }
 }

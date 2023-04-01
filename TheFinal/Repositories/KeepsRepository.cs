@@ -20,6 +20,14 @@ namespace TheFinal.Repositories
             ";
             int id = _db.ExecuteScalar<int>(sql, keepData);
             keepData.Id = id;
+            string sql2 = @"
+            UPDATE keeps
+            SET
+            kept = kept + 1
+            WHERE id = @id;
+            ";
+            int rows = _db.Execute(sql2, new { id });
+            keepData.Kept++;
             return keepData;
         }
 
@@ -38,6 +46,14 @@ namespace TheFinal.Repositories
                 return keep;
             }, new{id}).FirstOrDefault();
             if(keep == null) throw new Exception($"No keep at Id: {id}");
+            string sql2 = @"
+            UPDATE keeps
+            SET
+            views = views + 1
+            WHERE id = @id;
+            ";
+            int rows = _db.Execute(sql2, new { id });
+            keep.Views++;
             return keep;
         }
 

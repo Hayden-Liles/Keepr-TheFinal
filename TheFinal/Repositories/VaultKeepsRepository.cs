@@ -33,13 +33,22 @@ namespace TheFinal.Repositories
             return _db.QueryFirstOrDefault<VaultKeep>(sql, new {vkId});
         }
 
-        internal void deleteVaultKeep(int vkId)
+        internal void deleteVaultKeep(VaultKeep vaultKeep)
         {
+            int vkId = vaultKeep.Id;
+            int keepId = vaultKeep.keepId;
             string sql = @"
             DELETE
             FROM
             vaultKeeps WHERE id = @vkId";
             _db.Execute(sql, new {vkId});
+            string sql2 = @"
+            UPDATE keeps
+            SET
+            kept = kept - 1
+            WHERE id = @keepId;
+            ";
+            int rows = _db.Execute(sql2, new { keepId });
         }
     }
 }

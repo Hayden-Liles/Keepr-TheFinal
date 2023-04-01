@@ -59,5 +59,13 @@ namespace TheFinal.Services
             this.GetVault(vaultId, userInfo);
             return _repo.getKeepsInVault(vaultId);
         }
+
+        internal List<Vault> GetVaultsByProfile(Account userInfo)
+        {
+            List<Vault> vaults = _repo.GetVaultsByProfile(userInfo?.Id);
+            if(vaults == null) throw new Exception("Invalid Id");
+            List<Vault> nVaults = vaults.FindAll(v => v.IsPrivate == false || v.CreatorId == userInfo?.Id);
+            return nVaults;
+        }
     }
 }
