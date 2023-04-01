@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark px-3 pt-4">
+  <nav class="navbar navbar-expand navbar-dark px-3 pt-4">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
       aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -7,7 +7,7 @@
 
 
     <div class="collapse navbar-collapse justify-content-between pb-1 myBorder" id="navbarText">
-      <div class="jusify-self-center d-flex align-items-center ps-5">
+      <div class="jusify-self-center d-flex align-items-center ps-3 ps-md-5">
         <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
           <div class="d-flex flex-column align-items-center">
             <img alt="logo" src="../assets/img/Keepr logo.svg" height="50" />
@@ -28,7 +28,7 @@
           </div>
         </div>
       </div>
-      <div class="px-5">
+      <div class="pe-2 pe-md-5">
         <Login />
       </div>
     </div>
@@ -66,6 +66,7 @@ a:hover {
 @media screen and (min-width: 768px) {
   nav {
     height: 64px;
+    max-width: 100vw;
   }
 }
 
