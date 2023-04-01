@@ -1,31 +1,36 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
-    <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
-      <div class="d-flex flex-column align-items-center">
-        <img alt="logo" src="../assets/img/cw-logo.png" height="45" />
-      </div>
-    </router-link>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarText"
-      aria-controls="navbarText"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
+  <nav class="navbar navbar-expand-lg navbar-dark px-3 pt-4">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+      aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarText">
-      <ul class="navbar-nav me-auto">
-        <li>
-          <router-link :to="{ name: 'About' }" class="btn text-success lighten-30 selectable text-uppercase">
-            About
+
+
+    <div class="collapse navbar-collapse justify-content-between pb-1 myBorder" id="navbarText">
+      <div class="jusify-self-center d-flex align-items-center ps-5">
+        <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
+          <div class="d-flex flex-column align-items-center">
+            <img alt="logo" src="../assets/img/Keepr logo.svg" height="50" />
+          </div>
+        </router-link>
+        <div class="myFont d-flex">
+          <router-link :to="{ name: 'Home' }" class="btn bg-primary fw-bold text-dark lighten-30 selectable">
+            Home
           </router-link>
-        </li>
-      </ul>
-      <!-- LOGIN COMPONENT HERE -->
-      <Login />
+          <div class="dropdown ps-2">
+            <button class="btn fw-semibold dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Create
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">New Keep</a></li>
+              <li><a class="dropdown-item" href="#">New Vault</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="px-5">
+        <Login />
+      </div>
     </div>
   </nav>
 </template>
@@ -45,14 +50,17 @@ a:hover {
   text-decoration: none;
 }
 
+.myFont {
+  font-family: 'Marko One', serif;
+}
+
 .nav-link {
   text-transform: uppercase;
 }
 
-.navbar-nav .router-link-exact-active {
-  border-bottom: 2px solid var(--bs-success);
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+.myBorder {
+  border-bottom: 2px solid #E9D8D6;
+  
 }
 
 @media screen and (min-width: 768px) {
@@ -61,4 +69,7 @@ a:hover {
   }
 }
 
+.border-bottom {
+  border-bottom: 1px solid var(--primary) !important;
+}
 </style>

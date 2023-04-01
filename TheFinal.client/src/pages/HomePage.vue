@@ -1,44 +1,66 @@
 <template>
-  <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <div class="home-card p-5 bg-white rounded elevation-3">
-      <img
-        src="https://bcw.blob.core.windows.net/public/img/8600856373152463"
-        alt="CodeWorks Logo"
-        class="rounded-circle"
-      >
-      <h1 class="my-5 bg-dark text-white p-3 rounded text-center">
-        Vue 3 Starter
-      </h1>
-    </div>
+  <div class="container-md-fluid">
+    <section class="bricks mx-5">
+      <div v-for="keep in keeps" class="myShadow">
+        <KeepCard :keep="keep" />
+      </div>
+    </section>
   </div>
 </template>
 
 <script>
+import KeepCard from '../components/KeepCard.vue';
+import { logger } from '../utils/Logger';
+import Pop from '../utils/Pop';
+import { keepsService } from '../services/KeepsService';
+import { onMounted } from 'vue';
+import { computed } from '@vue/reactivity';
+import { AppState } from '../AppState';
+
 export default {
   setup() {
-    return {}
+    onMounted(() => {
+      getAllKeeps()
+    })
+
+    async function getAllKeeps() {
+      try {
+        await keepsService.getAllKeeps()
+      }
+      catch (error) {
+        logger.error(error)
+        Pop.error(error)
+      }
+    }
+    return {
+      keeps: computed(() => AppState.keeps)
+    }
   }
 }
 </script>
 
 <style scoped lang="scss">
-.home {
-  display: grid;
-  height: 80vh;
-  place-content: center;
-  text-align: center;
-  user-select: none;
-
-  .home-card {
-    width: 50vw;
-
-    >img {
-      height: 200px;
-      max-width: 200px;
-      width: 100%;
-      object-fit: contain;
-      object-position: center;
-    }
+$gap: 2.5em;
+.bricks {
+  columns: 100px;
+  column-gap: .5em;
+  &>div {
+    margin-top: 20px;
+    display: inline-block;
   }
+}
+@media (min-width: 768px) { 
+  .bricks {
+    columns: 350px;
+    column-gap: $gap;
+    &>div {
+    margin-top: 20px;
+    display: inline-block;
+  }
+  }
+}
+.myShadow{
+  box-shadow: 0px 0px 8px 0 rgba(0,0,0,0.5);
+  border-radius: 5px;
 }
 </style>
