@@ -21,9 +21,8 @@
             <button class="btn fw-semibold dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
               Create
             </button>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">New Keep</a></li>
-              <li><a class="dropdown-item" href="#">New Vault</a></li>
+            <ul class="dropdown-menu text-center">
+              <li class="selectable"><button data-bs-toggle="modal" data-bs-target="#CreateKeepModal" class="noBorder w-100">New Keep</button></li>
             </ul>
           </div>
         </div>
@@ -60,7 +59,10 @@ a:hover {
 
 .myBorder {
   border-bottom: 2px solid #E9D8D6;
-  
+}
+.noBorder{
+  border: none;
+  background-color: transparent;
 }
 
 @media screen and (min-width: 768px) {

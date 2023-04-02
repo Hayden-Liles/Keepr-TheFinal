@@ -11,6 +11,7 @@
 import { computed } from 'vue'
 import { AppState } from './AppState'
 import Navbar from './components/Navbar.vue'
+import CreateKeepModal from './components/CreateKeepModal.vue'
 
 export default {
   setup() {
@@ -18,7 +19,7 @@ export default {
       appState: computed(() => AppState)
     }
   },
-  components: { Navbar }
+  components: { Navbar, CreateKeepModal }
 }
 </script>
 <style lang="scss">

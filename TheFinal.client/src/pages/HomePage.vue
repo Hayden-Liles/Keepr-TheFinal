@@ -6,6 +6,7 @@
       </div>
     </section>
   </div>
+  <CreateKeepModal/>
 </template>
 
 <script>
@@ -16,26 +17,27 @@ import { keepsService } from '../services/KeepsService';
 import { onMounted } from 'vue';
 import { computed } from '@vue/reactivity';
 import { AppState } from '../AppState';
+import CreateKeepModal from '../components/CreateKeepModal.vue';
 
 export default {
-  setup() {
-    onMounted(() => {
-      getAllKeeps()
-    })
-
-    async function getAllKeeps() {
-      try {
-        await keepsService.getAllKeeps()
-      }
-      catch (error) {
-        logger.error(error)
-        Pop.error(error)
-      }
-    }
-    return {
-      keeps: computed(() => AppState.keeps)
-    }
-  }
+    setup() {
+        onMounted(() => {
+            getAllKeeps();
+        });
+        async function getAllKeeps() {
+            try {
+                await keepsService.getAllKeeps();
+            }
+            catch (error) {
+                logger.error(error);
+                Pop.error(error);
+            }
+        }
+        return {
+            keeps: computed(() => AppState.keeps)
+        };
+    },
+    components: { CreateKeepModal }
 }
 </script>
 
