@@ -18,21 +18,21 @@ namespace TheFinal.Repositories
             FROM keeps k
             JOIN accounts a ON k.creatorId = a.id
             WHERE k.creatorId = @id";
-            return _db.Query<Keep, Account, Keep>(sql, (k, a) =>
+            return _db.Query<Keep, Profile, Keep>(sql, (k, a) =>
             {
                 k.Creator = a;
                 return k;
             }, new { id }).ToList();
         }
 
-        internal Account GetProfile(string id)
+        internal Profile GetProfile(string id)
         {
             string sql = @"
             SELECT
             *
             FROM accounts
             WHERE id = @id";
-            return _db.QueryFirstOrDefault<Account>(sql, new { id });
+            return _db.QueryFirstOrDefault<Profile>(sql, new { id });
         }
 
         internal List<Vault> GetVaultsByProfile(string id)
@@ -44,7 +44,7 @@ namespace TheFinal.Repositories
             FROM vaults v
             JOIN accounts a ON v.creatorId = a.id
             WHERE v.creatorId = @id";
-            return _db.Query<Vault, Account, Vault>(sql, (v, a) =>
+            return _db.Query<Vault, Profile, Vault>(sql, (v, a) =>
             {
                 v.Creator = a;
                 return v;

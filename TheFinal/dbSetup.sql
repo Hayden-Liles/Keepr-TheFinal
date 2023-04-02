@@ -5,7 +5,8 @@ CREATE TABLE
         updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update',
         name varchar(255) COMMENT 'User Name',
         email varchar(255) COMMENT 'User Email',
-        picture varchar(255) COMMENT 'User Picture'
+        picture varchar(255) COMMENT 'User Picture',
+        coverImg varchar(500) COMMENT 'User Cover Image' DEFAULT 'https://images.unsplash.com/photo-1599508704512-2f19efd1e35f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8JTNGfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
     ) default charset utf8 COMMENT '';
 
 CREATE TABLE

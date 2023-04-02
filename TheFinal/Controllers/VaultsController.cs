@@ -22,7 +22,7 @@ namespace TheFinal.Controllers
         {
             try
             {
-                Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+                Profile userInfo = await _auth.GetUserInfoAsync<Profile>(HttpContext);
                 vaultData.CreatorId = userInfo.Id;
                 vaultData.Creator = userInfo;
                 Vault vault = _vaultsService.createVault(vaultData);
@@ -39,7 +39,7 @@ namespace TheFinal.Controllers
         {
             try
             {
-                Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+                Profile userInfo = await _auth.GetUserInfoAsync<Profile>(HttpContext);
                 Vault vault = _vaultsService.GetVault(id, userInfo);
                 return Ok(vault);
             }
@@ -55,7 +55,7 @@ namespace TheFinal.Controllers
         {
             try
             {
-                Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+                Profile userInfo = await _auth.GetUserInfoAsync<Profile>(HttpContext);
                 vaultData.Id = id;
                 Vault vault = _vaultsService.updateVault(vaultData, userInfo);
                 return Ok(vault);
@@ -72,7 +72,7 @@ namespace TheFinal.Controllers
         {
             try
             {
-                Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+                Profile userInfo = await _auth.GetUserInfoAsync<Profile>(HttpContext);
                 string message = _vaultsService.deleteVault(id, userInfo);
                 return Ok(message);
             }
@@ -87,7 +87,7 @@ namespace TheFinal.Controllers
         {
             try
             {
-                Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+                Profile userInfo = await _auth.GetUserInfoAsync<Profile>(HttpContext);
                 List<VaultedKeep> keeps = _vaultsService.getKeepsInVault(vaultId, userInfo);
                 return Ok(keeps);
             }

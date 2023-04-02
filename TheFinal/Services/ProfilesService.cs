@@ -16,14 +16,14 @@ namespace TheFinal.Services
             return keeps;
         }
 
-        internal Account GetProfile(string id)
+        internal Profile GetProfile(string id)
         {
-            Account profile = _repo.GetProfile(id);
+            Profile profile = _repo.GetProfile(id);
             if(profile == null) throw new Exception("Invalid Id");
             return profile;
         }
 
-        internal List<Vault> GetVaultsByProfile(string id, Account userInfo)
+        internal List<Vault> GetVaultsByProfile(string id, Profile userInfo)
         {
             List<Vault> vaults = _repo.GetVaultsByProfile(id);
             if(vaults == null) throw new Exception("Invalid Id");

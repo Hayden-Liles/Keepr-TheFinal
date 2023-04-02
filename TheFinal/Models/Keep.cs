@@ -10,7 +10,7 @@ namespace TheFinal.Models
         public int Views { get; set; }
         public int Kept { get; set; }
 
-        public Account Creator { get; set; }
+        public Profile Creator { get; set; }
     }
     public class VaultedKeep : Keep{
         public int vaultKeepId { get; set; }

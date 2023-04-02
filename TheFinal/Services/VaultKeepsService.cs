@@ -11,7 +11,7 @@ namespace TheFinal.Services
             _vaultsService = vaultsService;
         }
 
-        internal VaultKeep createVaultKeep(VaultKeep vaultKeepData, Account userInfo)
+        internal VaultKeep createVaultKeep(VaultKeep vaultKeepData, Profile userInfo)
         {
             Vault vault = _vaultsService.GetVault(vaultKeepData.VaultId, userInfo);
             if(vault.CreatorId != userInfo.Id) throw new Exception("You are not the creator of this vault");

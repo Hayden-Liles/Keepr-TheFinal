@@ -1,5 +1,5 @@
 <template>
-    <div class="component">
+    <div class="component" data-bs-toggle="modal" data-bs-target="#KeepModal" @click="getKeep(keep.id)">
         <img :src="keep.img" class="img-fluid rounded" alt="">
         <div class="d-flex">
             <p class="px-2 text-light">{{ keep.name }}</p>
@@ -10,6 +10,10 @@
 
 
 <script>
+import { keepsService } from '../services/KeepsService'
+import { logger } from '../utils/Logger'
+import Pop from '../utils/Pop'
+
 export default {
     props: {
         keep: {
@@ -18,7 +22,17 @@ export default {
         }
     },
     setup(){
-        return {}
+        return {
+            async getKeep(id){
+                try {
+                    await keepsService.getKeep(id)
+                }
+                catch (error) {
+                    logger.error(error)
+                    Pop.error(error)
+                }
+            }
+        }
     }
 }
 </script>

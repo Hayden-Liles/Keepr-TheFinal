@@ -7,6 +7,7 @@
     </section>
   </div>
   <CreateKeepModal/>
+  <KeepModal/>
 </template>
 
 <script>

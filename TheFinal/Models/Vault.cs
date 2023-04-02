@@ -9,6 +9,6 @@ namespace TheFinal.Models
         public string Img { get; set; }
         public bool IsPrivate { get; set; }
 
-        public Account Creator { get; set; }
+        public Profile Creator { get; set; }
     }
 }

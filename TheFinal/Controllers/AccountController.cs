@@ -15,7 +15,7 @@ public class AccountController : ControllerBase
         _vaultsService = vaultsService;
     }
 
-    [HttpGet]
+  [HttpGet]
   [Authorize]
   public async Task<ActionResult<Account>> Get()
   {

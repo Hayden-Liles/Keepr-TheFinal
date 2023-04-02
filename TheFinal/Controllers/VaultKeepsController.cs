@@ -19,7 +19,7 @@ namespace TheFinal.Controllers
         {
             try
             {
-                Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+                Profile userInfo = await _auth.GetUserInfoAsync<Profile>(HttpContext);
                 vaultKeepData.CreatorId = userInfo.Id;
                 VaultKeep vaultKeep = _vaultKeepsService.createVaultKeep(vaultKeepData, userInfo);
                 return vaultKeep;
@@ -37,7 +37,7 @@ namespace TheFinal.Controllers
         {
             try
             {
-                Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+                Profile userInfo = await _auth.GetUserInfoAsync<Profile>(HttpContext);
                 _vaultKeepsService.deleteVaultKeep(id, userInfo.Id);
                 return Ok("Successfully Deleted");
             }

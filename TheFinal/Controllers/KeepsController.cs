@@ -18,7 +18,7 @@ namespace TheFinal.Controllers
         public async Task<ActionResult<Keep>> CreateKeep([FromBody] Keep keepData){
             try 
             {
-                Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+                Profile userInfo = await _auth.GetUserInfoAsync<Profile>(HttpContext);
                 keepData.CreatorId = userInfo.Id;
                 keepData.Creator = userInfo;
                 Keep keep = _keepsService.CreateKeep(keepData);
@@ -62,7 +62,7 @@ namespace TheFinal.Controllers
         public async Task<ActionResult<Keep>> updateKeep([FromBody] Keep keepData, int id){
             try 
             {
-                Account userinfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+                Profile userinfo = await _auth.GetUserInfoAsync<Profile>(HttpContext);
                 keepData.CreatorId = userinfo.Id;
                 Keep keep = _keepsService.updateKeep(keepData, id);
                 return keep;
@@ -79,7 +79,7 @@ namespace TheFinal.Controllers
         public async Task<ActionResult<string>> deleteKeep(int id){
             try 
             {
-                Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+                Profile userInfo = await _auth.GetUserInfoAsync<Profile>(HttpContext);
                 string message = _keepsService.deleteKeep(userInfo.Id, id);
                 return Ok(message);
             }

@@ -14,7 +14,7 @@ namespace TheFinal.Services
             return _repo.createVault(vaultData);
         }
 
-        internal Vault GetVault(int id, Account userInfo)
+        internal Vault GetVault(int id, Profile userInfo)
         {
             Vault vault = _repo.getVault(id);
             if(vault.IsPrivate == true || vault == null){
@@ -24,7 +24,7 @@ namespace TheFinal.Services
             return vault;
         }
 
-        internal Vault updateVault(Vault vaultData, Account userInfo)
+        internal Vault updateVault(Vault vaultData, Profile userInfo)
         {
             Vault vaultToCheck = this.GetVault(vaultData.Id, userInfo);
             if(vaultToCheck.CreatorId != userInfo.Id) throw new Exception("You are unauthorized to edit this vault");
@@ -46,7 +46,7 @@ namespace TheFinal.Services
             return vault;
         }
 
-        internal string deleteVault(int vaultId, Account userInfo)
+        internal string deleteVault(int vaultId, Profile userInfo)
         {
             Vault vault = this.GetVault(vaultId, userInfo);
             if(vault.CreatorId != userInfo.Id) throw new Exception("You are unauthorized to delete this vault");
@@ -54,13 +54,13 @@ namespace TheFinal.Services
             return $"Vault at Id:{vaultId} has been successfuly deleted!";
         }
 
-        internal List<VaultedKeep> getKeepsInVault(int vaultId, Account userInfo)
+        internal List<VaultedKeep> getKeepsInVault(int vaultId, Profile userInfo)
         {
             this.GetVault(vaultId, userInfo);
             return _repo.getKeepsInVault(vaultId);
         }
 
-        internal List<Vault> GetVaultsByProfile(Account userInfo)
+        internal List<Vault> GetVaultsByProfile(Profile userInfo)
         {
             List<Vault> vaults = _repo.GetVaultsByProfile(userInfo?.Id);
             if(vaults == null) throw new Exception("Invalid Id");

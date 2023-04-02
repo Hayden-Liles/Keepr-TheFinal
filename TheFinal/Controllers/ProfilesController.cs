@@ -15,11 +15,11 @@ namespace TheFinal.Controllers
 
 
         [HttpGet("{id}")]
-        public ActionResult<Account> GetProfile(string id)
+        public ActionResult<Profile> GetProfile(string id)
         {
             try
             {
-                Account profile = _profilesService.GetProfile(id);
+                Profile profile = _profilesService.GetProfile(id);
                 return Ok(profile);
             }
             catch (Exception e)
@@ -47,7 +47,7 @@ namespace TheFinal.Controllers
         {
             try
             {
-                Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+                Profile userInfo = await _auth.GetUserInfoAsync<Profile>(HttpContext);
                 List<Vault> vaults = _profilesService.GetVaultsByProfile(id, userInfo);
                 return Ok(vaults);
             }

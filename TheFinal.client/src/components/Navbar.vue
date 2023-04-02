@@ -17,7 +17,7 @@
           <router-link :to="{ name: 'Home' }" class="btn bg-primary fw-bold text-dark lighten-30 selectable">
             Home
           </router-link>
-          <div class="dropdown ps-2">
+          <div class="dropdown ps-2" v-if="account.id">
             <button class="btn fw-semibold dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
               Create
             </button>
@@ -35,10 +35,14 @@
 </template>
 
 <script>
+import { computed } from '@vue/reactivity';
 import Login from './Login.vue'
+import { AppState } from '../AppState';
 export default {
   setup() {
-    return {}
+    return {
+      account: computed(() => AppState.account)
+    }
   },
   components: { Login }
 }

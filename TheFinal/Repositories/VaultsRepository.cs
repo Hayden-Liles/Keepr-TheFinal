@@ -33,7 +33,7 @@ namespace TheFinal.Repositories
             JOIN accounts acts ON vaults.creatorId = acts.id
             WHERE vaults.id = @id;
             ";
-            Vault vault = _db.Query<Vault, Account, Vault>(sql, (vault, creator) => {
+            Vault vault = _db.Query<Vault, Profile, Vault>(sql, (vault, creator) => {
                 vault.Creator = creator;
                 return vault;
             }, new{id}).FirstOrDefault();
@@ -77,7 +77,7 @@ namespace TheFinal.Repositories
             JOIN accounts acts ON k.creatorId = acts.id
             WHERE vaultId = @id;
             ";
-            List<VaultedKeep> keeps = _db.Query<VaultedKeep, Account, VaultedKeep>(sql, (keep, creator) => {
+            List<VaultedKeep> keeps = _db.Query<VaultedKeep, Profile, VaultedKeep>(sql, (keep, creator) => {
                 keep.Creator = creator;
                 return keep;
             }, new { id }).ToList();
@@ -93,7 +93,7 @@ namespace TheFinal.Repositories
             FROM vaults v
             JOIN accounts a ON v.creatorId = a.id
             WHERE v.creatorId = @id";
-            return _db.Query<Vault, Account, Vault>(sql, (v, a) =>
+            return _db.Query<Vault, Profile, Vault>(sql, (v, a) =>
             {
                 v.Creator = a;
                 return v;

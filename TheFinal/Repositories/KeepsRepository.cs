@@ -41,7 +41,7 @@ namespace TheFinal.Repositories
             JOIN accounts acts ON keeps.creatorId = acts.id
             WHERE keeps.id = @id;
             ";
-            Keep keep = _db.Query<Keep, Account, Keep>(sql, (keep, creator) => {
+            Keep keep = _db.Query<Keep, Profile, Keep>(sql, (keep, creator) => {
                 keep.Creator = creator;
                 return keep;
             }, new{id}).FirstOrDefault();
@@ -66,7 +66,7 @@ namespace TheFinal.Repositories
             FROM keeps
             JOIN accounts acts ON keeps.creatorId = acts.id;
             ";
-            List<Keep> keeps = _db.Query<Keep, Account, Keep>(sql, (keep, creator) => {
+            List<Keep> keeps = _db.Query<Keep, Profile, Keep>(sql, (keep, creator) => {
                 keep.Creator = creator;
                 return keep;
             }).ToList();
