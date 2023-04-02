@@ -2,8 +2,11 @@
   <div class="container">
     <div class="row mt-3">
       <div class="col-12">
-        <div class="d-flex align-items-center">
-          <img :src="account.picture" class="rounded-circle" alt="">
+        <div class="text-center">
+          <img :src="account.coverImg" class="img-fluid coverImg">
+        </div>
+        <div class="text-center mUp">
+          <img :src="account.picture" class="rounded-circle profileImg" alt="">
           <p class="fs-1 ms-2 fw-semibold"><u>{{ account.name }}</u></p>
         </div>
       </div>
@@ -24,10 +27,18 @@ export default {
 </script>
 
 <style scoped>
-img {
-  max-width: 100px;
+.profileImg{
+  height: 100px;
+  width: 100px;
+}
+.coverImg{
+  height: 50vh;
+  width: 50vw;
 }
 p{
   margin: 0;
+}
+.mUp{
+  transform: translateY(-50px);
 }
 </style>
