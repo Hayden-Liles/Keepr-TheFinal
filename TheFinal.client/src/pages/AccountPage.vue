@@ -62,7 +62,7 @@ export default {
     });
     return {
       account: computed(() => AppState.account),
-      vaults: computed(() => AppState.vaults),
+      vaults: computed(() => AppState.accountVaults),
       keeps: computed(() => AppState.keeps)
     };
   },

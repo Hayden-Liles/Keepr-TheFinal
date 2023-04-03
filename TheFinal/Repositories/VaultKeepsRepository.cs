@@ -20,6 +20,14 @@ namespace TheFinal.Repositories
             ";
             int id = _db.ExecuteScalar<int>(sql, vaultKeepData);
             vaultKeepData.Id = id;
+            int keepId = vaultKeepData.keepId;
+            string sql2 = @"
+            UPDATE keeps
+            SET
+            kept = kept + 1
+            WHERE id = @keepId;
+            ";
+            int rows = _db.Execute(sql2, new { keepId });
             return vaultKeepData;
         }
 

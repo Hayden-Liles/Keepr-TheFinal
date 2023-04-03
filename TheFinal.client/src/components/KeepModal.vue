@@ -28,9 +28,30 @@
                         </div>
                         <div class="d-flex flex-grow-1 m-auto mb-3">
                             <div class="d-flex align-items-end">
-                                <div class="d-flex justify-content-between">
-                                    <button class="me-5 removeBtn" v-if="keep.creator.id == account.id"
-                                        @click="deleteKeep(keep.id)" data-bs-dismiss="modal">remove</button>
+                                <div class="d-md-flex text-center text-md-start justify-content-between">
+                                    <button class="me-1 removeBtn"
+                                        v-if="keep.creator.id == account.id && route.name != 'Vaults'"
+                                        @click="deleteKeep(keep.id)" data-bs-dismiss="modal">
+                                        delete
+                                    </button>
+                                    <button class="me-1 removeBtn"
+                                        v-if="route.name == 'Vaults' && curVault.creator.id == account.id"
+                                        @click="removeKeepFromVault(keep.id)" data-bs-dismiss="modal">
+                                        remove
+                                    </button>
+                                    <div class="d-flex align-items-center me-md-5 my-3" v-if="account.id">
+                                        <form @submit.prevent="addKeepToVault(editable.id, keep.id)" class="d-flex">
+                                            <div class="form-group">
+                                                <select class="form-select noBorder" aria-label="Default select example"
+                                                    v-model="editable.id">
+                                                    <option v-for="vault in accVault" :value="vault.id">{{ vault.name }}
+                                                    </option>
+                                                </select>
+                                                <p class="formDefault" v-if="!editable.id">Save to a vault</p>
+                                            </div>
+                                            <button class="btn btn-sm bg-success">save</button>
+                                        </form>
+                                    </div>
                                     <div class="d-flex align-items-end">
                                         <img :src="keep.creator.picture" class="creatorImg me-2">
                                         <p>{{ keep.creator.name }}</p>
@@ -51,18 +72,61 @@ import { computed } from '@vue/reactivity';
 import { AppState } from '../AppState';
 import { keepsService } from '../services/KeepsService';
 import Pop from '../utils/Pop';
+import { accountService } from '../services/AccountService';
+import { onMounted, ref } from 'vue';
+import { logger } from '../utils/Logger';
+import { useRoute } from 'vue-router';
 
 export default {
     setup() {
+        const route = useRoute()
+        const editable = ref({})
+        async function getUsersVaults() {
+            await accountService.getAccountVaults()
+        }
+
+        onMounted(() => {
+            getUsersVaults()
+            logger.log(route.name)
+        })
+
         return {
             keep: computed(() => AppState.activeKeep),
+            curVault: computed(() => AppState.activeVault),
             account: computed(() => AppState.account),
+            accVault: computed(() => AppState.accountVaults),
+            editable,
+            route,
 
             async deleteKeep(id) {
                 if (await Pop.confirm('Are you sure you want to delete this keep?')) {
                     await keepsService.deleteKeep(id)
                 } else {
                     Pop.toast('Keep not deleted')
+                }
+            },
+
+            async addKeepToVault(vaultId, keepId) {
+                try {
+                    editable.value = {}
+                    await keepsService.addKeepToVault(vaultId, keepId)
+                    Pop.toast('Keep added to vault')
+                } catch (error) {
+                    logger.log(error)
+                }
+            },
+
+            async removeKeepFromVault(keepId) {
+                try {
+                    if (await Pop.confirm('Are you sure you want to delete this keep?')) {
+                        await keepsService.removeKeepFromVault(keepId)
+                        Pop.toast('Keep removed from vault')
+                    } else {
+                        Pop.toast('Keep was not removed from vault')
+                    }
+
+                } catch (error) {
+                    logger.log(error)
                 }
             }
         }
@@ -72,15 +136,36 @@ export default {
 
 
 <style lang="scss" scoped>
+.formDefault {
+    position: absolute;
+    transform: translate(15px, -30px);
+}
+
+.noBorder {
+    border: none !important;
+    background-color: transparent;
+}
+
 .keepImg {
     height: 100vh;
     width: 100%;
     border-top-left-radius: .5em;
     border-bottom-left-radius: .5em;
 }
-.ofScroll{
+
+.saveBtn {
+    height: 30px;
+}
+
+.mySelect {
+    max-height: 50vh;
     overflow-y: scroll;
 }
+
+.ofScroll {
+    overflow-y: scroll;
+}
+
 p {
     margin: 0;
 }
@@ -115,7 +200,8 @@ p {
 
 @media (min-width: 768px) {
     .keepImg {
-        height: 70vh;
+        height: 100%;
+        max-height: 80vh;
         width: 100%;
         border-top-left-radius: .5em;
         border-bottom-left-radius: .5em;
