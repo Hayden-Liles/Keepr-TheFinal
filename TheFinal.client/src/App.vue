@@ -5,6 +5,8 @@
   <main>
     <router-view />
   </main>
+  <CreateKeepModal/>
+  <CreateVaultModal/>
 </template>
 
 <script>
@@ -12,6 +14,7 @@ import { computed } from 'vue'
 import { AppState } from './AppState'
 import Navbar from './components/Navbar.vue'
 import CreateKeepModal from './components/CreateKeepModal.vue'
+import CreateVaultModal from './components/CreateVaultModal.vue'
 
 export default {
   setup() {
@@ -19,7 +22,7 @@ export default {
       appState: computed(() => AppState)
     }
   },
-  components: { Navbar, CreateKeepModal }
+  components: { Navbar, CreateKeepModal, CreateVaultModal }
 }
 </script>
 <style lang="scss">

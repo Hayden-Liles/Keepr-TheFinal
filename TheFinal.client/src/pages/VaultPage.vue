@@ -1,14 +1,21 @@
 <template>
-    <div class="container myFont" v-if="vault">
+    <div class="container myFont" v-if="vault && (!vault.isPrivate || vault.creator.id == account?.id)">
         <div class="row mt-4">
             <div class="col-md-5 m-auto text-center">
-                <img :src="vault.img" class="vaultImg">
+                <img :src="vault.img" class="vaultImg"> 
                 <div class="text-light">
                     <p class="fs-5 fw-semibold myP">By {{ vault.creator.name }}</p>
                     <p class="fs-3 fw-bold p-4 myP">{{ vault.name }}</p>
                 </div>
                 <div class="text-end fs-5 p-0 m-0">
-                    <i class="mdi mdi-dots-horizontal"></i>
+                    <div class="dropdown ps-2" v-if="account.id">
+                        <button class="btn fw-semibold dropdown-toggle mdi mdi-dots-horizontal" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                        </button>
+                        <ul class="dropdown-menu text-center">
+                            <li><button class="btn selectable w-100" @click="DeleteVault(vault.id)">Delete Vault</button></li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="d-flex justify-content-center">
                     <p class="fs-5 fw-semibold keepsP px-2 py-1 rounded bg-success">{{ keeps.length }} Keeps</p>
@@ -21,12 +28,12 @@
             </div>
         </section>
     </div>
-    <KeepModal/>
+    <KeepModal />
 </template>
 
 
 <script>
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { vaultsService } from '../services/VaultsService';
 import { computed } from '@vue/reactivity';
 import { AppState } from '../AppState';
@@ -37,25 +44,54 @@ import Pop from '../utils/Pop';
 export default {
     setup() {
         const route = useRoute();
+        const router = useRouter();
         const routeId = route.params.id;
 
         async function getVaultById() {
             try {
-                vaultsService.getVaultById(routeId);
+                const check = vaultsService.getVaultById(routeId);
+                if(check == 'goBack'){
+                    logger.log("hi")
+                    router.push({ name: "Home" })
+                }
             }
             catch (error) {
+                router.push({ name: "Home" })
                 logger.error(error)
                 Pop.error(error)
             }
         }
 
-
         onMounted(() => {
             getVaultById();
+            setTimeout(() => {
+            if(AppState.activeVault == null || AppState.activeVault.isPrivate && AppState.activeVault.creator.id != AppState.account.id){
+                Pop.error("The Vault You tried to view is private")
+                router.push({ name: "Home" })
+            }
+        }, 1000);
         })
         return {
             vault: computed(() => AppState.activeVault),
-            keeps: computed(() => AppState.keeps)
+            keeps: computed(() => AppState.keeps),
+            account: computed(() => AppState.account),
+
+            async DeleteVault(id){
+                try {
+                    if(await Pop.confirm("Are you sure you want to delete this vault?")){
+                        await vaultsService.DeleteVault(id)
+                        Pop.toast("Vault Deleted")
+                        router.push({ name: "Account" })
+                    }
+                    else{
+                        Pop.toast("Vault Not Deleted")
+                    }
+                }
+                catch(error) {
+                    logger.error(error)
+                    Pop.error(error)
+                }
+            },
         }
     }
 }

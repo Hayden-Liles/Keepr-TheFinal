@@ -22,7 +22,8 @@
               Create
             </button>
             <ul class="dropdown-menu text-center">
-              <li class="selectable"><button data-bs-toggle="modal" data-bs-target="#CreateKeepModal" class="noBorder w-100">New Keep</button></li>
+              <li class="selectable"><button data-bs-toggle="modal" data-bs-target="#CreateKeepModal" class="noBorder w-100 fs-5">New Keep</button></li>
+              <li class="selectable"><button data-bs-toggle="modal" data-bs-target="#CreateVaultModal" class="noBorder w-100 fs-5">New Vault</button></li>
             </ul>
           </div>
         </div>

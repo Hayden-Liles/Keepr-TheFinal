@@ -1,15 +1,21 @@
 <template>
     <router-link :to="{ name: 'Vaults', params: {id: vault.id} }">
-        <div class="mb-5">
+        <div class="mb-5" v-if="!vault.isPrivate || vault.creator.id == account.id">
             <img :src="vault.img" class="image-fluid">
-            <p class="fs-4 fw-bold myFont ps-3 text-light">{{ vault.name }}</p>
+            <div class="moveUp d-flex">
+                <p class="fs-4 fw-bold myFont ps-3 text-light">{{ vault.name }}</p>
+                <i v-if="vault.isPrivate" class="mdi mdi-lock fs-5"></i>
+            </div>
         </div>
     </router-link>
 </template>
 
 
 <script>
+import { computed } from '@vue/reactivity';
 import { RouterLink } from 'vue-router';
+import { AppState } from '../AppState';
+import { logger } from '../utils/Logger';
 
 export default {
     props: {
@@ -18,8 +24,11 @@ export default {
             required: true
         }
     },
+
     setup() {
-        return {};
+        return {
+            account: computed(() => AppState.account)
+        };
     },
     components: { RouterLink }
 }
@@ -36,7 +45,7 @@ img {
     font-family: 'Oxygen';
 }
 
-p{
+.moveUp{
     margin: 0;
     position: absolute;
     transform: translateY(-40px);

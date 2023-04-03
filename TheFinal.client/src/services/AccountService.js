@@ -24,6 +24,11 @@ class AccountService {
     const res = await api.get('/account/keeps')
     AppState.keeps = res.data
   }
+
+  async updateAccount(profileData){
+    const res = await api.put('/account', profileData)
+    AppState.account = res.data
+  }
 }
 
 export const accountService = new AccountService()

@@ -49,7 +49,7 @@
                                                 </select>
                                                 <p class="formDefault" v-if="!editable.id">Save to a vault</p>
                                             </div>
-                                            <button class="btn btn-sm bg-success">save</button>
+                                            <button class="btn btn-sm bg-success" :disabled="!editable.id">save</button>
                                         </form>
                                     </div>
                                     <div class="d-flex align-items-end">
@@ -73,21 +73,27 @@ import { AppState } from '../AppState';
 import { keepsService } from '../services/KeepsService';
 import Pop from '../utils/Pop';
 import { accountService } from '../services/AccountService';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watchEffect } from 'vue';
 import { logger } from '../utils/Logger';
 import { useRoute } from 'vue-router';
+
 
 export default {
     setup() {
         const route = useRoute()
         const editable = ref({})
         async function getUsersVaults() {
+            if(AppState.account.id == null){
+                logger.log("hi")
+                return
+            }
             await accountService.getAccountVaults()
         }
 
-        onMounted(() => {
-            getUsersVaults()
-            logger.log(route.name)
+        watchEffect(() => {
+            if(AppState.account.id){
+                getUsersVaults();
+            }
         })
 
         return {
@@ -118,7 +124,7 @@ export default {
 
             async removeKeepFromVault(keepId) {
                 try {
-                    if (await Pop.confirm('Are you sure you want to delete this keep?')) {
+                    if (await Pop.confirm('Are you sure you want to remove this keep from your vault?')) {
                         await keepsService.removeKeepFromVault(keepId)
                         Pop.toast('Keep removed from vault')
                     } else {

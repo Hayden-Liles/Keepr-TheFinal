@@ -6,7 +6,6 @@
       </div>
     </section>
   </div>
-  <CreateKeepModal/>
   <KeepModal/>
 </template>
 
@@ -15,7 +14,7 @@ import KeepCard from '../components/KeepCard.vue';
 import { logger } from '../utils/Logger';
 import Pop from '../utils/Pop';
 import { keepsService } from '../services/KeepsService';
-import { onMounted, onUnmounted } from 'vue';
+import { onMounted, onUnmounted, watchEffect } from 'vue';
 import { computed } from '@vue/reactivity';
 import { AppState } from '../AppState';
 import CreateKeepModal from '../components/CreateKeepModal.vue';

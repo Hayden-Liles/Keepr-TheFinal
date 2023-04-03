@@ -7,7 +7,8 @@
         </div>
         <div class="text-center mUp">
           <img :src="account.picture" class="rounded-circle profileImg" alt="">
-          <p class="fs-1 ms-2 fw-semibold"><u>{{ account.name }}</u></p>
+            <p class="fs-1 ms-2 fw-semibold"><u>{{ account.name }}</u></p>
+            <button data-bs-toggle="modal" data-bs-target="#EditAccountModal" class="btn btn-info">Edit Account</button>
         </div>
       </div>
       <p class="fs-3 fw-bold myFont">Vaults</p>
@@ -27,6 +28,7 @@
     </div>
   </div>
   <KeepModal />
+  <EditAccountModal/>
 </template>
 
 <script>
@@ -36,6 +38,7 @@ import { logger } from '../utils/Logger'
 import Pop from '../utils/Pop'
 import { accountService } from '../services/AccountService'
 import VaultCard from '../components/VaultCard.vue'
+import EditAccountModal from '../components/EditAccountModal.vue'
 export default {
   setup() {
     async function getAccountVaults() {
@@ -66,7 +69,7 @@ export default {
       keeps: computed(() => AppState.keeps)
     };
   },
-  components: { VaultCard }
+  components: { VaultCard, EditAccountModal }
 }
 </script>
 
