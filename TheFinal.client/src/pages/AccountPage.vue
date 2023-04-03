@@ -1,5 +1,5 @@
 <template>
-  <div class="container myFont" v-if="account.id">
+  <div class="container myFont mb-5" v-if="account.id">
     <div class="row mt-3">
       <div class="col-12">
         <div class="text-center">
@@ -8,16 +8,24 @@
         <div class="text-center mUp">
           <img :src="account.picture" class="rounded-circle profileImg" alt="">
             <p class="fs-1 ms-2 fw-semibold"><u>{{ account.name }}</u></p>
+            <i class="mdi mdi-alpha-k-box-outline fs-3 px-3">{{ keeps.length }}</i>
+            <i class="mdi mdi-safe fs-3 px-3">{{ vaults.length }}</i>
             <button data-bs-toggle="modal" data-bs-target="#EditAccountModal" class="btn btn-info">Edit Account</button>
         </div>
       </div>
       <p class="fs-3 fw-bold myFont">Vaults</p>
+      <div class="d-flex justify-content-center" v-if="vaults.length == 0">
+        <p class="fs-3 fw-light bg-success shrink rounded text-center">You currently have no Vaults</p>
+      </div>
       <div class="row" v-if="vaults.length > 0">
         <div class="col-md-3" v-for="vault in vaults">
           <VaultCard :vault="vault" />
         </div>
       </div>
       <p class="fs-3 fw-bold myFont">Keeps</p>
+      <div class="d-flex justify-content-center" v-if="keeps.length == 0">
+        <p class="fs-3 fw-light bg-success shrink rounded text-center">You currently have no Keeps</p>
+      </div>
       <div class="col-12">
         <section class="bricks mx-5">
           <div v-for="keep in keeps" class="myShadow">
@@ -27,7 +35,6 @@
       </div>
     </div>
   </div>
-  <KeepModal />
   <EditAccountModal/>
 </template>
 
@@ -101,6 +108,10 @@ $gap: 2.5em;
   width: 55vw;
 }
 
+.shrink{
+  width: fit-content;
+}
+
 p {
   margin: 0;
 }
@@ -123,4 +134,5 @@ p {
       display: inline-block;
     }
   }
-}</style>
+}
+</style>

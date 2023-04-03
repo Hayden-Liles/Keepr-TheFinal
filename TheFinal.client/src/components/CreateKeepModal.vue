@@ -18,7 +18,7 @@
                         <textarea v-model="editable.description" type="text" required id="description"
                             placeholder="Description..."></textarea>
                         <div class="text-end">
-                            <button class="createBtn text-light" data-bs-dismiss="modal" aria-label="Create">Create</button>
+                            <button type="submit" class="createBtn text-light" data-bs-dismiss="modal" aria-label="Create">Create</button>
                         </div>
                     </form>
                 </div>

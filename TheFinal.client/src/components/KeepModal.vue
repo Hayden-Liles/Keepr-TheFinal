@@ -5,11 +5,11 @@
                 <div class="row">
 
 
-                    <div class="col-12 col-md-6 order-2 order-md-1 d-flex d-flex">
+                    <div class="col-12 col-md-6 d-flex d-flex">
                         <img :src="keep.img" class="img-fluid keepImg">
                     </div>
 
-                    <div class="col-12 col-md-6 myFont order-1 order-md-2 flex-fill d-flex flex-column">
+                    <div class="col-12 col-md-6 myFont flex-fill bg-white d-flex flex-column">
                         <div class="d-flex justify-content-between mt-2 mb-5">
                             <div class="">
                                 <i class="mdi mdi-eye-outline fs-3 px-3">{{ keep.views }}</i>
@@ -20,27 +20,29 @@
                                     aria-label="Close"></button>
                             </div>
                         </div>
-                        <div class="">
-                            <div class="text-center p-1 p-md-5 ofScroll">
-                                <p class="fs-2 fw-bold">{{ keep.name }}</p>
+                        <div class="d-flex align-items-center h-75">
+                            <div class="text-start p-1 p-md-5 ofScroll">
+                                <div class="text-center">
+                                    <p class="fs-2 fw-bold">{{ keep.name }}</p>
+                                </div>
                                 <p>{{ keep.description }}</p>
                             </div>
                         </div>
                         <div class="d-flex flex-grow-1 m-auto mb-3">
                             <div class="d-flex align-items-end">
                                 <div class="d-md-flex text-center text-md-start justify-content-between">
-                                    <button class="me-1 removeBtn"
-                                        v-if="keep.creator.id == account.id && route.name != 'Vaults'"
+                                    <button class="me-1 removeBtn text-dark"
+                                        v-if="keep?.creator?.id == account.id && route.name != 'Vaults'"
                                         @click="deleteKeep(keep.id)" data-bs-dismiss="modal">
                                         delete
                                     </button>
-                                    <button class="me-1 removeBtn"
-                                        v-if="route.name == 'Vaults' && curVault.creator.id == account.id"
+                                    <button class="me-1 removeBtn text-dark"
+                                        v-if="route.name == 'Vaults' && curVault?.creator?.id == account.id"
                                         @click="removeKeepFromVault(keep.id)" data-bs-dismiss="modal">
                                         remove
                                     </button>
                                     <div class="d-flex align-items-center me-md-5 my-3" v-if="account.id">
-                                        <form @submit.prevent="addKeepToVault(editable.id, keep.id)" class="d-flex">
+                                        <form @submit.prevent="addKeepToVault(editable.id, keep.id)" class="d-flex" v-if="accVault.length > 0">
                                             <div class="form-group">
                                                 <select class="form-select noBorder" aria-label="Default select example"
                                                     v-model="editable.id">
@@ -51,11 +53,14 @@
                                             </div>
                                             <button class="btn btn-sm bg-success" :disabled="!editable.id">save</button>
                                         </form>
+                                        <p class="ps-2 fw-light">Create Vault to Add</p>
                                     </div>
-                                    <div class="d-flex align-items-end">
-                                        <img :src="keep.creator.picture" class="creatorImg me-2">
-                                        <p>{{ keep.creator.name }}</p>
-                                    </div>
+                                    <router-link :to="{ name: 'Profile', params: { id: keep.creator.id } }">
+                                    <div class="d-flex align-items-end" data-bs-dismiss="modal">
+                                            <img :src="keep.creator.picture" class="creatorImg me-2">
+                                            <p class="text-dark fw-semibold">{{ keep.creator.name }}</p>
+                                        </div>
+                                    </router-link>
                                 </div>
                             </div>
                         </div>
@@ -83,7 +88,7 @@ export default {
         const route = useRoute()
         const editable = ref({})
         async function getUsersVaults() {
-            if(AppState.account.id == null){
+            if (AppState.account.id == null) {
                 logger.log("hi")
                 return
             }
@@ -91,7 +96,7 @@ export default {
         }
 
         watchEffect(() => {
-            if(AppState.account.id){
+            if (AppState.account.id) {
                 getUsersVaults();
             }
         })
@@ -153,7 +158,7 @@ export default {
 }
 
 .keepImg {
-    height: 100vh;
+    height: 60vh;
     width: 100%;
     border-top-left-radius: .5em;
     border-bottom-left-radius: .5em;
@@ -212,4 +217,5 @@ p {
         border-top-left-radius: .5em;
         border-bottom-left-radius: .5em;
     }
-}</style>
+}
+</style>

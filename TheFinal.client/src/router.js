@@ -13,12 +13,6 @@ const routes = [
     beforeEnter: authSettled
   },
   {
-    path: '/about',
-    name: 'About',
-    component: loadPage('AboutPage'),
-    beforeEnter: authSettled
-  },
-  {
     path: '/account',
     name: 'Account',
     component: loadPage('AccountPage'),
@@ -28,6 +22,12 @@ const routes = [
     path: '/vaults/:id',
     name: 'Vaults',
     component: loadPage('VaultPage'),
+    beforeEnter: authSettled
+  },
+  {
+    path: '/profile/:id',
+    name: 'Profile',
+    component: loadPage('ProfilePage'),
     beforeEnter: authSettled
   }
 ]

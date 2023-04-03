@@ -6,7 +6,7 @@ CREATE TABLE
         name varchar(255) COMMENT 'User Name',
         email varchar(255) COMMENT 'User Email',
         picture varchar(255) COMMENT 'User Picture',
-        coverImg varchar(500) COMMENT 'User Cover Image' DEFAULT 'https://images.unsplash.com/photo-1599508704512-2f19efd1e35f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8JTNGfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
+        coverImg varchar(1000) COMMENT 'User Cover Image' DEFAULT 'https://images.unsplash.com/photo-1599508704512-2f19efd1e35f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8JTNGfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60'
     ) default charset utf8 COMMENT '';
 
 CREATE TABLE
@@ -51,3 +51,8 @@ FROM vaultKeeps
 JOIN vaults ON vaultKeeps.vaultId = vaults.id
 JOIN keeps ON vaultKeeps.keepId = keeps.id
 WHERE vaults.id = 43;
+
+INSERT INTO accounts
+              (name, picture, email, id, coverImg)
+            VALUES
+              (@Name, @Picture, @Email, @Id, @CoverImg)

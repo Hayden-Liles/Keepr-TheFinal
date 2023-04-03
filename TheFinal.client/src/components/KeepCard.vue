@@ -3,7 +3,7 @@
         <img :src="keep.img" class="img-fluid rounded" alt="">
         <div class="d-flex">
             <p class="px-2 text-light">{{ keep.name }}</p>
-            <img :src="keep.creator.picture" class="img-fluid rounded-circle creatorImg" :title="keep.creator.name">
+                <img :src="keep.creator.picture" class="img-fluid rounded-circle creatorImg" :title="keep.creator.name">
         </div>
     </div>
 </template>

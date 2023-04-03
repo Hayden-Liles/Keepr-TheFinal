@@ -4,7 +4,7 @@
             <div class="modal-content">
                 <div class="modal-body myFont fs-3 fw-semibold">
                     <div class="d-flex mb-2 justify-content-between">
-                        <p class="">Add your Vault</p>
+                        <p class="">Edit your account</p>
                         <div class="text-end">
                             <button type="button" class="mdi mdi-close mbSize" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
@@ -13,14 +13,14 @@
                     <form @submit.prevent="updateAccount()" class="p-2 px-3">
                         <div>
                             <label for="name">Name</label>
-                            <input v-model="editable.name" type="text" required id="name" placeholder="Title...">
+                            <input v-model="editable.name" type="text" required minlength="3" id="name" placeholder="Title...">
                             <label for="img">Profile Picture</label>
-                            <input v-model="editable.picture" type="url" required id="picture" placeholder="Image url...">
+                            <input v-model="editable.picture" type="url" minlength="5" required id="picture" placeholder="Image url...">
                             <label for="coverImg">Cover Image</label>
-                            <input v-model="editable.coverImg" type="url" required id="coverImg" placeholder="Image url...">
+                            <input v-model="editable.coverImg" type="url" minlength="5" required id="coverImg" placeholder="Image url...">
                         </div>
                         <div class="text-end">
-                            <button class="btn btn-success text-light" data-bs-dismiss="modal" aria-label="Update">Update</button>
+                            <button type="submit" class="btn btn-success text-light" data-bs-dismiss="modal" aria-label="Update">Update</button>
                         </div>
                     </form>
                 </div>

@@ -27,7 +27,7 @@ public class AccountsRepository
             INSERT INTO accounts
               (name, picture, email, id, coverImg)
             VALUES
-              (@Name, @Picture, @Email, @Id, @coverImg)";
+              (@Name, @Picture, @Email, @Id, 'https://images.unsplash.com/photo-1484069560501-87d72b0c3669?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cXVlc3Rpb258ZW58MHx8MHx8&auto=format&fit=crop&w=700&q=60')";
     _db.Execute(sql, newAccount);
     return newAccount;
   }
@@ -38,7 +38,8 @@ public class AccountsRepository
             UPDATE accounts
             SET 
               name = @Name,
-              picture = @Picture
+              picture = @Picture,
+              coverImg = @coverImg
             WHERE id = @Id;";
     _db.Execute(sql, update);
     return update;
