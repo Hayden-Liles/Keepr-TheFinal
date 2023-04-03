@@ -5,11 +5,11 @@
                 <div class="row">
 
 
-                    <div class="col-6 d-flex d-flex">
+                    <div class="col-12 col-md-6 order-2 order-md-1 d-flex d-flex">
                         <img :src="keep.img" class="img-fluid keepImg">
                     </div>
 
-                    <div class="col-6 myFont flex-fill d-flex flex-column">
+                    <div class="col-12 col-md-6 myFont order-1 order-md-2 flex-fill d-flex flex-column">
                         <div class="d-flex justify-content-between mt-2 mb-5">
                             <div class="">
                                 <i class="mdi mdi-eye-outline fs-3 px-3">{{ keep.views }}</i>
@@ -17,11 +17,11 @@
                             </div>
                             <div>
                                 <button type="button" class="mdi mdi-close mbSize" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
+                                    aria-label="Close"></button>
                             </div>
                         </div>
                         <div class="">
-                            <div class="text-center p-5">
+                            <div class="text-center p-1 p-md-5 ofScroll">
                                 <p class="fs-2 fw-bold">{{ keep.name }}</p>
                                 <p>{{ keep.description }}</p>
                             </div>
@@ -29,7 +29,8 @@
                         <div class="d-flex flex-grow-1 m-auto mb-3">
                             <div class="d-flex align-items-end">
                                 <div class="d-flex justify-content-between">
-                                    <button class="me-5 removeBtn" v-if="keep.creator.id == account.id" @click="deleteKeep(keep.id)" data-bs-dismiss="modal">remove</button>
+                                    <button class="me-5 removeBtn" v-if="keep.creator.id == account.id"
+                                        @click="deleteKeep(keep.id)" data-bs-dismiss="modal">remove</button>
                                     <div class="d-flex align-items-end">
                                         <img :src="keep.creator.picture" class="creatorImg me-2">
                                         <p>{{ keep.creator.name }}</p>
@@ -58,9 +59,9 @@ export default {
             account: computed(() => AppState.account),
 
             async deleteKeep(id) {
-                if(await Pop.confirm('Are you sure you want to delete this keep?')){
+                if (await Pop.confirm('Are you sure you want to delete this keep?')) {
                     await keepsService.deleteKeep(id)
-                }else{
+                } else {
                     Pop.toast('Keep not deleted')
                 }
             }
@@ -72,12 +73,15 @@ export default {
 
 <style lang="scss" scoped>
 .keepImg {
-    height: 70vh;
+    height: 100vh;
     width: 100%;
     border-top-left-radius: .5em;
     border-bottom-left-radius: .5em;
 }
-p{
+.ofScroll{
+    overflow-y: scroll;
+}
+p {
     margin: 0;
 }
 
@@ -99,7 +103,8 @@ p{
 .myFont {
     font-family: 'Oxygen', sans-serif;
 }
-.removeBtn{
+
+.removeBtn {
     background-color: #f8f9fa;
     border: none;
     border-bottom: 1px solid #6c757d;
@@ -107,4 +112,12 @@ p{
     font-size: 1.5em;
     font-weight: 600;
 }
-</style>
+
+@media (min-width: 768px) {
+    .keepImg {
+        height: 70vh;
+        width: 100%;
+        border-top-left-radius: .5em;
+        border-bottom-left-radius: .5em;
+    }
+}</style>

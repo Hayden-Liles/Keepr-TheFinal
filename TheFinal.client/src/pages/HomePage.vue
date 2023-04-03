@@ -1,5 +1,5 @@
 <template>
-  <div class="container-md-fluid">
+  <div class="container-md-fluid pb-3">
     <section class="bricks mx-5">
       <div v-for="keep in keeps" class="myShadow">
         <KeepCard :keep="keep" />
@@ -15,7 +15,7 @@ import KeepCard from '../components/KeepCard.vue';
 import { logger } from '../utils/Logger';
 import Pop from '../utils/Pop';
 import { keepsService } from '../services/KeepsService';
-import { onMounted } from 'vue';
+import { onMounted, onUnmounted } from 'vue';
 import { computed } from '@vue/reactivity';
 import { AppState } from '../AppState';
 import CreateKeepModal from '../components/CreateKeepModal.vue';
@@ -24,6 +24,9 @@ export default {
     setup() {
         onMounted(() => {
             getAllKeeps();
+        });
+        onUnmounted(() => {
+            AppState.keeps = [];
         });
         async function getAllKeeps() {
             try {

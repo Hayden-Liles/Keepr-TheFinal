@@ -7,11 +7,22 @@ class AccountService {
   async getAccount() {
     try {
       const res = await api.get('/account')
-      logger.log(res.data)
       AppState.account = new Account(res.data)
     } catch (err) {
       logger.error('HAVE YOU STARTED YOUR SERVER YET???', err)
     }
+  }
+
+  async getAccountVaults() {
+    AppState.vaults = []
+    const res = await api.get('/account/vaults')
+    AppState.vaults = res.data
+  }
+
+  async getAccountKeeps() {
+    AppState.keeps = []
+    const res = await api.get('/account/keeps')
+    AppState.keeps = res.data
   }
 }
 

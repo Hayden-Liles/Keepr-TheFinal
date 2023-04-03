@@ -43,5 +43,19 @@ public class AccountsRepository
     _db.Execute(sql, update);
     return update;
   }
+
+    internal List<Keep> GetKeepsByProfile(Account userInfo)
+    {
+        string sql = @"
+        SELECT 
+        k.*,
+        a.*
+        FROM keeps k
+        JOIN accounts a ON k.creatorId = a.id
+        WHERE k.creatorId = @Id;";
+        return _db.Query<Keep, Account, Keep>(sql, (keep, account) => {
+          keep.Creator = account; return keep; },
+          new { userInfo.Id }, splitOn: "id").ToList();
+    }
 }
 
