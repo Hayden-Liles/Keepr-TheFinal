@@ -35,7 +35,10 @@
 
 Keepr is a social network that allows users to visually share and discover new interests by posting images or videos to their own, or others', collections (i.e., a collection of 'vaults,' usually with a common theme) and browsing what other users have kept.
 
+<!-- Goal of the Project -->
+## Goals
 
+In this final checkpoint, students will demonstrate a working knowledge of building full-stack applications. They will utilize a VueJs frontend with Vue-Router to manage the DOM. On the server-side, students will use the DotNet WebApi for their server and implement the Repository pattern to communicate with their database. In addition, students will use Auth0 for user management, Dapper as an ORM, and a MySQL server for their database.
 
 ### Built With
 
