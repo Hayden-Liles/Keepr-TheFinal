@@ -34,6 +34,14 @@
 ## About The Project
 
 Keepr is a social network that allows users to visually share and discover new interests by posting images or videos to their own, or others', collections (i.e., a collection of 'vaults,' usually with a common theme) and browsing what other users have kept.
+<ul>
+   <li>Implement Vue, Vue-Router, and Masonry Layout to create a responsive, interactive front-end experience, efficiently organizing content using an adaptive grid       structure for seamless cross-device compatibility.</li>
+   <li>With C# and .NET I created a robust backend to manage and store data, leveraging the power of these technologies to ensure high performance and scalability for     Keepr.</li>
+   <li>Auth0 Integration: Implemented secure user authentication and identity management, bolstering the platform's overall security and providing a safe user            experience.</li>
+</ul>
+
+
+Languages Utilized: Vue, C# JavaScript, SCSS, HTML, .NET, Express, Bootstrap
 
 <!-- Goal of the Project -->
 ## Goals
